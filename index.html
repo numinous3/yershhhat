@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHOCCO — Натуральные шоколадные батончики</title>
+  <style>
+/* ===== normalize.css ===== */
+html{line-height:1.15;-webkit-text-size-adjust:100%}
+body{margin:0}
+main{display:block}
+img{border-style:none;max-width:100%;display:block}
+button,input,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}
+
+/* ===== Общие стили ===== */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #333;
+  background-color: #fff;
+  line-height: 1.5;
+}
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #1c2b2d;
+}
+.button {
+  display: inline-block;
+  background-color: #fff;
+  color: #2b7a78;
+  border-radius: 30px;
+  padding: 12px 32px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.button:hover {
+  background-color: #e7f4f3;
+}
+
+/* ===== hero ===== */
+.hero {
+  color: #fff;
+  text-align: center;
+  padding: 100px 20px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 100%), 
+              url('https://images.unsplash.com/photo-1606313564200-e50b8b18461d?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+}
+.hero__content {
+  max-width: 650px;
+  margin: 0 auto;
+}
+.hero__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.hero__text {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+/* ===== products ===== */
+.products {
+  background-color: #f9f9f9;
+  padding: 80px 20px;
+}
+.products__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+.product-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 300px;
+  overflow: hidden;
+  text-align: center;
+  transition: 0.3s;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+}
+.product-card img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+.product-card h3 {
+  font-size: 1.2rem;
+  margin: 15px 0 5px;
+  color: #2b7a78;
+}
+.product-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0 0 10px;
+  padding: 0 10px;
+}
+.product-card .price {
+  font-weight: bold;
+  color: #1c2b2d;
+  margin-bottom: 15px;
+}
+.product-card .button {
+  margin-bottom: 20px;
+  background-color: #2b7a78;
+  color: #fff;
+}
+.product-card .button:hover {
+  background-color: #20625e;
+}
+
+/* ===== benefits ===== */
+.benefits {
+  background-color: #fff;
+  padding: 80px 20px;
+}
+.benefits__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+.benefits__item {
+  flex: 1 1 250px;
+  background-color: #f9f9f9;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.benefits__item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+}
+.benefits__item-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2b7a78;
+  margin-bottom: 10px;
+}
+
+/* ===== reviews ===== */
+.reviews {
+  background-color: #e7f4f3;
+  padding: 80px 20px;
+}
+.reviews__item {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.reviews__item img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 15px;
+}
+.reviews__author {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #2b7a78;
+}
+
+/* ===== form ===== */
+.form {
+  background-color: #f1f8f6;
+  padding: 80px 20px;
+}
+.form__container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.form__input, .form__textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+.form__button {
+  background-color: #2b7a78;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.form__button:hover {
+  background-color: #20625e;
+}
+
+/* ===== footer ===== */
+.footer {
+  background-color: #1c2b2d;
+  color: #fff;
+  text-align: center;
+  padding: 30px 15px;
+  font-size: 0.9rem;
+}
+.footer__map {
+  margin: 20px auto;
+  height: 200px;
+  background: url('https://static-maps.yandex.ru/1.x/?lang=ru_RU&ll=37.601,55.752&z=13&size=450,200&l=map') center/cover no-repeat;
+  border-radius: 10px;
+  max-width: 450px;
+}
+
+/* ===== адаптив ===== */
+@media (max-width: 768px) {
+  .products__list {
+    flex-direction: column;
+    align-items: center;
+  }
+  .benefits__list {
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero {
+    padding: 70px 15px;
+  }
+  .hero__title {
+    font-size: 1.8rem;
+  }
+  .form__button {
+    width: 100%;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <!-- ===== hero ===== -->
+  <section class="hero" role="banner">
+    <div class="hero__content">
+      <h1 class="hero__title">Натуральные шоколадные батончики CHOCCO</h1>
+      <p class="hero__text">
+        100% натуральные ингредиенты без сахара — энергия и вкус в каждом кусочке.
+      </p>
+      <a href="#products" class="button hero__button">Посмотреть продукцию</a>
+    </div>
+  </section>
+
+  <!-- ===== products ===== -->
+  <section id="products" class="products" aria-labelledby="products-title">
+    <div class="container">
+      <h2 id="products-title" class="section-title">Наши батончики</h2>
+      <div class="products__list">
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1621072156002-3572f82a47eb?auto=format&fit=crop&w=700&q=80" alt="CHOCCO Classic">
+          <h3>CHOCCO Classic</h3>
+          <p>Тёмный шоколад с миндалём и финиками. Классика вкуса без сахара.</p>
+          <div class="price">180 ₽</div>
+          <a href="#form" class="button">Заказать</a>
+        </div>
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1621072156001-6e6b14ce7f04?auto=format&fit=crop&w=700&q=80" alt="CHOCCO Coconut">
+          <h3>CHOCCO Coconut</h3>
+          <p>Молочный шоколад с кокосовой стружкой и медом.</p>
+          <div class="price">190 ₽</div>
+          <a href="#form" class="button">Заказать</a>
+        </div>
+        <div class="product-card">
+          <img src="https://images.unsplash.com/photo-1611152043483-8b6fa79b3a83?auto=format&fit=crop&w=700&q=80" alt="CHOCCO Energy">
+          <h3>CHOCCO Energy</h3>
+          <p>Белковый батончик с какао и орехами — идеален для спорта.</p>
+          <div class="price">210 ₽</div>
+          <a href="#form" class="button">Заказать</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== benefits ===== -->
+  <section class="benefits">
+    <div class="container">
+      <h2 class="section-title">Почему CHOCCO?</h2>
+      <div class="benefits__list">
+        <div class="benefits__item">
+          <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=300&q=80" alt="Натурально">
+          <h3 class="benefits__item-title">Полезно</h3>
+          <p>Натуральные ингредиенты без сахара и консервантов.</p>
+        </div>
+        <div class="benefits__item">
+          <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=300&q=80" alt="Вкусно">
+          <h3 class="benefits__item-title">Вкусно</h3>
+          <p>Нежный вкус, любимый взрослыми и детьми.</p>
+        </div>
+        <div class="benefits__item">
+          <img src="https://images.unsplash.com/photo-1508747703725-7196c4f17714?auto=format&fit=crop&w=300&q=80" alt="Энергия">
+          <h3 class="benefits__item-title">Питательно</h3>
+          <p>Источник энергии для спорта, учебы и активного дня.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== reviews ===== -->
+  <section class="reviews">
+    <div class="container">
+      <h2 class="section-title">Отзывы</h2>
+      <div class="reviews__item">
+        <img src="https://i.pravatar.cc/150?img=65" alt="Мария Орлова">
+        <p>«Лучшие батончики премиум уровня! Они действительно вкусные и при этом полезные. 
+        Беру их на работу и в спортзал — удобно и сытно!»</p>
+        <div class="reviews__author">— Мария Орлова</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== form ===== -->
+  <section id="form" class="form">
+    <div class="form__container">
+      <h2 class="section-title">Закажите доставку</h2>
+      <form action="#" method="post" class="form__body">
+        <input type="text" class="form__input" placeholder="Имя" required>
+        <input type="text" class="form__input" placeholder="Улица" required>
+        <input type="text" class="form__input" placeholder="Дом, корпус, квартира" required>
+        <textarea class="form__textarea" placeholder="Комментарий"></textarea>
+        <button type="submit" class="form__button">Заказать</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== footer ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__map"></div>
+      <p>Москва, ул. Новый Арбат, д.12</p>
+      <p>+7 (800) 983-93-90</p>
+      <p>© 2025 CHOCCO. Все права защищены.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
