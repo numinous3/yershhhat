@@ -1,319 +1,331 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CHOCCO — Натуральные шоколадные батончики</title>
   <style>
-/* ===== normalize ===== */
-html{line-height:1.15;-webkit-text-size-adjust:100%}
-body{margin:0}
-main{display:block}
-img{border-style:none;max-width:100%;display:block}
-button,input,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}
+    /* ======== СБРОС ======== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #fff; color: #333; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
 
-/* ===== базовые стили ===== */
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  color: #333;
-  background-color: #fff;
-  line-height: 1.5;
-  overflow-x: hidden;
-}
-.container {max-width: 1100px;margin: 0 auto;padding: 0 15px;}
-.section-title {text-align: center;font-size: 2rem;margin-bottom: 1.5rem;color: #1c2b2d;}
-.button {display: inline-block;background-color: #fff;color: #2b7a78;border-radius: 30px;padding: 12px 32px;text-decoration: none;font-weight: 600;transition: 0.3s;}
-.button:hover {background-color: #e7f4f3;}
+    /* ======== HEADER ======== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: #f4ede4;
+    }
+    .logo { font-size: 1.5rem; font-weight: bold; color: #64351d; }
+    .menu-btn {
+      cursor: pointer;
+      background: none;
+      border: 2px solid #64351d;
+      padding: 10px 20px;
+      border-radius: 6px;
+      color: #64351d;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .menu-btn:hover { background: #64351d; color: #fff; }
 
-/* ===== header & fullscreen menu ===== */
-.header {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  background-color: rgba(255,255,255,0.9);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 25px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  z-index: 10;
-}
-.logo {font-weight: 700; color: #2b7a78; font-size: 1.2rem;}
-.menu-btn {background: none;border: 2px solid #2b7a78;border-radius: 6px;padding: 6px 10px;cursor: pointer;font-weight: bold;color: #2b7a78;}
+    /* ======== FULLSCREEN MENU ======== */
+    .menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(100, 53, 29, 0.97);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      font-size: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.4s ease;
+    }
+    .menu.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .close-menu {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      cursor: pointer;
+    }
 
-/* полноэкранное меню */
-.fullscreen-menu {
-  position: fixed; top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.9);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  z-index: 20;
-}
-.fullscreen-menu.active {display: flex;}
-.fullscreen-menu a {
-  color: #fff;
-  font-size: 2rem;
-  margin: 15px 0;
-  text-decoration: none;
-  transition: 0.3s;
-}
-.fullscreen-menu a:hover {color: #2b7a78;}
-.close-menu {
-  position: absolute; top: 25px; right: 30px;
-  color: #fff; font-size: 2rem; cursor: pointer;
-}
+    /* ======== HERO ======== */
+    .hero {
+      background: url('https://images.unsplash.com/photo-1606312619344-5c6e0b6a1fcb?auto=format&fit=crop&w=1600&q=80') center/cover;
+      color: #fff;
+      text-align: center;
+      padding: 120px 20px;
+    }
+    .hero h1 { font-size: 2.5rem; margin-bottom: 20px; text-shadow: 0 3px 5px rgba(0,0,0,0.5); }
+    .hero p { font-size: 1.2rem; }
 
-/* ===== hero ===== */
-.hero {
-  color: #fff;
-  text-align: center;
-  padding: 120px 20px 100px;
-  background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 100%), 
-              url('https://images.unsplash.com/photo-1606313564200-e50b8b18461d?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
-}
-.hero__content {max-width: 650px;margin: 0 auto;}
-.hero__title {font-size: 2.5rem;font-weight: 700;margin-bottom: 1rem;}
-.hero__text {font-size: 1.1rem;margin-bottom: 2rem;}
+    /* ======== SLIDER (заготовка) ======== */
+    .slider {
+      margin: 60px auto;
+      max-width: 900px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .slide {
+      background: url('https://images.unsplash.com/photo-1608198093002-ad4e005484a9?auto=format&fit=crop&w=1600&q=80') center/cover;
+      color: #fff;
+      padding: 140px 40px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
 
-/* ===== slider (заготовка) ===== */
-.slider {background-color: #f1f8f6;padding: 80px 20px;text-align:center;}
-.slider__slide {
-  max-width: 700px;margin: 0 auto;
-  background: #fff;border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  padding: 40px;
-}
-.slider__slide img {border-radius: 12px;margin-bottom: 15px;}
+    /* ======== ACCORDION ======== */
+    .accordion {
+      max-width: 800px;
+      margin: 80px auto;
+    }
+    .accordion__item {
+      border-bottom: 1px solid #ccc;
+    }
+    .accordion__header {
+      background: #f4ede4;
+      padding: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .accordion__header:hover { background: #e7d6c7; }
+    .accordion__content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      padding: 0 20px;
+      background: #fff;
+    }
+    .accordion__item.active .accordion__content {
+      max-height: 200px;
+      padding: 20px;
+    }
 
-/* ===== accordion ===== */
-.accordion {background:#fff;padding:80px 20px;}
-.accordion__item {border:1px solid #ccc;border-radius:8px;margin-bottom:10px;overflow:hidden;}
-.accordion__header {
-  background:#f9f9f9;cursor:pointer;
-  padding:15px;font-weight:600;
-  display:flex;justify-content:space-between;align-items:center;
-}
-.accordion__header.active {background:#ffec8b;}
-.accordion__content {
-  height:0;overflow:hidden;
-  transition:height 0.4s ease;
-  padding:0 15px;
-}
-.accordion__content-inner {padding:15px 0;}
-.accordion__arrow {transition:transform 0.3s;}
-.accordion__header.active .accordion__arrow {transform:rotate(180deg);}
+    /* ======== SLIDESHOW ======== */
+    .slideshow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 80px auto;
+      gap: 20px;
+    }
+    .slideshow__avatars {
+      display: flex;
+      gap: 20px;
+    }
+    .slideshow__avatars img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: 0.3s;
+    }
+    .slideshow__avatars img.active {
+      border-color: #64351d;
+    }
+    .slideshow__content {
+      max-width: 600px;
+      text-align: center;
+      background: #f4ede4;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
 
-/* ===== slideshow ===== */
-.slideshow {background:#e7f4f3;padding:80px 20px;text-align:center;}
-.slideshow__avatars {display:flex;justify-content:center;gap:20px;margin-bottom:30px;}
-.slideshow__avatars img {
-  width:70px;height:70px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:0.3s;
-}
-.slideshow__avatars img.active {border-color:#2b7a78;}
-.slideshow__content {max-width:600px;margin:0 auto;}
-.slideshow__item {display:none;}
-.slideshow__item.active {display:block;}
+    /* ======== FORM ======== */
+    .form-section {
+      background: #faf5ef;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    input, textarea {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    button {
+      background: #64351d;
+      color: #fff;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover { background: #4a2414; }
+    .form-message { margin-top: 10px; font-weight: bold; }
 
-/* ===== form ===== */
-.form {background-color:#f9f9f9;padding:80px 20px;}
-.form__container {max-width:700px;margin:0 auto;}
-.form__input, .form__textarea {
-  width:100%;border:1px solid #ccc;border-radius:8px;padding:10px 14px;margin-bottom:15px;font-size:1rem;
-}
-.form__button {background-color:#2b7a78;color:#fff;border:none;border-radius:25px;padding:12px 30px;cursor:pointer;font-weight:600;transition:0.3s;}
-.form__button:hover {background-color:#20625e;}
-.form__result {margin-top:15px;font-weight:600;text-align:center;}
+    /* ======== FOOTER ======== */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #f4ede4;
+      font-size: 0.9rem;
+      color: #555;
+    }
 
-/* ===== footer ===== */
-.footer {background-color:#1c2b2d;color:#fff;text-align:center;padding:30px 15px;font-size:0.9rem;}
-.footer__map {margin:20px auto;height:200px;background:url('https://static-maps.yandex.ru/1.x/?lang=ru_RU&ll=37.601,55.752&z=13&size=450,200&l=map') center/cover no-repeat;border-radius:10px;max-width:450px;}
-
-/* ===== адаптив ===== */
-@media (max-width:768px){
-  .hero__title{font-size:1.8rem;}
-  .hero{padding:90px 15px;}
-  .slideshow__avatars{flex-wrap:wrap;}
-  .form__button{width:100%;}
-}
+    /* ======== ADAPTIVE ======== */
+    @media (max-width: 480px) {
+      header { flex-direction: column; gap: 10px; }
+      .hero h1 { font-size: 1.8rem; }
+      .slide { font-size: 1.3rem; padding: 100px 20px; }
+      .accordion__header { font-size: 1rem; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- ===== header ===== -->
-  <header class="header">
+  <header>
     <div class="logo">CHOCCO</div>
     <button class="menu-btn">Меню</button>
   </header>
 
-  <!-- ===== fullscreen menu ===== -->
-  <div class="fullscreen-menu" id="menu">
-    <span class="close-menu" id="closeMenu">&times;</span>
-    <a href="#hero">Главная</a>
-    <a href="#slider">Слайдер</a>
-    <a href="#accordion">Аккордеон</a>
-    <a href="#slideshow">Слайдшоу</a>
-    <a href="#form">Заказ</a>
-  </div>
+  <nav class="menu" id="menu">
+    <div class="close-menu">&times;</div>
+    <a href="#">Главная</a>
+    <a href="#">О нас</a>
+    <a href="#">Продукция</a>
+    <a href="#">Контакты</a>
+  </nav>
 
-  <!-- ===== hero ===== -->
-  <section id="hero" class="hero">
-    <div class="hero__content">
-      <h1 class="hero__title">Натуральные шоколадные батончики CHOCCO</h1>
-      <p class="hero__text">100% натуральные ингредиенты без сахара — энергия и вкус в каждом кусочке.</p>
-      <a href="#form" class="button">Заказать</a>
+  <section class="hero">
+    <h1>Натуральные шоколадные батончики</h1>
+    <p>Без сахара. Без глютена. Только удовольствие.</p>
+  </section>
+
+  <section class="slider">
+    <div class="slide">Попробуй вкус природы!</div>
+  </section>
+
+  <section class="accordion">
+    <div class="accordion__item">
+      <div class="accordion__header">Из натуральных ингредиентов</div>
+      <div class="accordion__content">Наши батончики содержат только орехи, мёд и какао.</div>
+    </div>
+    <div class="accordion__item">
+      <div class="accordion__header">Без добавленного сахара</div>
+      <div class="accordion__content">Мы используем только природные подсластители.</div>
+    </div>
+    <div class="accordion__item">
+      <div class="accordion__header">Полезно и вкусно</div>
+      <div class="accordion__content">Каждый батончик — это энергия и польза в одном укусе.</div>
     </div>
   </section>
 
-  <!-- ===== slider ===== -->
-  <section id="slider" class="slider">
-    <h2 class="section-title">Наш слайдер</h2>
-    <div class="slider__slide">
-      <img src="https://images.unsplash.com/photo-1611152043483-8b6fa79b3a83?auto=format&fit=crop&w=700&q=80" alt="Слайд 1">
-      <p>Это пример одного слайда. Позже можно подключить библиотеку (например, Slick или OwlCarousel).</p>
-    </div>
-  </section>
-
-  <!-- ===== accordion ===== -->
-  <section id="accordion" class="accordion">
-    <h2 class="section-title">Наши преимущества</h2>
-
-    <div class="accordion__item">
-      <div class="accordion__header">Полезно <span class="accordion__arrow">▼</span></div>
-      <div class="accordion__content">
-        <div class="accordion__content-inner">
-          Только натуральные ингредиенты, никаких консервантов и искусственных добавок.
-        </div>
-      </div>
-    </div>
-
-    <div class="accordion__item">
-      <div class="accordion__header">Вкусно <span class="accordion__arrow">▼</span></div>
-      <div class="accordion__content">
-        <div class="accordion__content-inner">
-          Нежный вкус, который нравится и взрослым, и детям.
-        </div>
-      </div>
-    </div>
-
-    <div class="accordion__item">
-      <div class="accordion__header">Питательно <span class="accordion__arrow">▼</span></div>
-      <div class="accordion__content">
-        <div class="accordion__content-inner">
-          Заряд энергии для активного дня и занятий спортом.
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== slideshow ===== -->
-  <section id="slideshow" class="slideshow">
-    <h2 class="section-title">Отзывы клиентов</h2>
+  <section class="slideshow">
     <div class="slideshow__avatars">
-      <img src="https://i.pravatar.cc/100?img=10" data-id="1" class="active" alt="Аватар 1">
-      <img src="https://i.pravatar.cc/100?img=12" data-id="2" alt="Аватар 2">
-      <img src="https://i.pravatar.cc/100?img=15" data-id="3" alt="Аватар 3">
+      <img src="https://randomuser.me/api/portraits/women/44.jpg" data-id="0" class="active">
+      <img src="https://randomuser.me/api/portraits/men/46.jpg" data-id="1">
+      <img src="https://randomuser.me/api/portraits/women/47.jpg" data-id="2">
     </div>
-    <div class="slideshow__content">
-      <div class="slideshow__item active" data-id="1">«Отличные батончики, беру их на работу каждый день!» — Мария</div>
-      <div class="slideshow__item" data-id="2">«Очень вкусно, при этом без сахара! Просто супер!» — Алексей</div>
-      <div class="slideshow__item" data-id="3">«Идеально для тренировок, насыщает и не перегружает!» — Ольга</div>
+    <div class="slideshow__content" id="slideshow-content">
+      “Лучший шоколад, который я пробовала! Натуральный и очень вкусный.” — Анна
     </div>
   </section>
 
-  <!-- ===== form ===== -->
-  <section id="form" class="form">
-    <div class="form__container">
-      <h2 class="section-title">Закажите доставку</h2>
-      <form id="orderForm">
-        <input type="text" name="name" class="form__input" placeholder="Имя" required>
-        <input type="text" name="phone" class="form__input" placeholder="Телефон" required>
-        <textarea name="comment" class="form__textarea" placeholder="Комментарий"></textarea>
-        <input type="hidden" name="to" value="test@mail.com">
-        <button type="submit" class="form__button">Отправить</button>
-      </form>
-      <div class="form__result" id="formResult"></div>
-    </div>
+  <section class="form-section">
+    <h2>Закажите сейчас</h2>
+    <form id="order-form">
+      <input type="text" name="name" placeholder="Ваше имя">
+      <input type="text" name="phone" placeholder="Телефон">
+      <textarea name="comment" placeholder="Комментарий"></textarea>
+      <button type="submit">Отправить</button>
+      <div class="form-message" id="form-message"></div>
+    </form>
   </section>
 
-  <!-- ===== footer ===== -->
-  <footer class="footer">
-    <div class="footer__map"></div>
-    <p>Москва, ул. Новый Арбат, д.12</p>
-    <p>+7 (800) 983-93-90</p>
-    <p>© 2025 CHOCCO. Все права защищены.</p>
-  </footer>
+  <footer>© 2025 CHOCCO. Все права защищены.</footer>
 
-  <!-- ===== JS ===== -->
   <script>
-  // ===== полноэкранное меню =====
-  const menu = document.getElementById('menu');
-  document.querySelector('.menu-btn').addEventListener('click', () => menu.classList.add('active'));
-  document.getElementById('closeMenu').addEventListener('click', () => menu.classList.remove('active'));
+    // === Полноэкранное меню ===
+    const menuBtn = document.querySelector('.menu-btn');
+    const menu = document.getElementById('menu');
+    const closeMenu = document.querySelector('.close-menu');
+    menuBtn.addEventListener('click', () => menu.classList.add('active'));
+    closeMenu.addEventListener('click', () => menu.classList.remove('active'));
 
-  // ===== аккордеон =====
-  document.querySelectorAll('.accordion__header').forEach(header => {
-    header.addEventListener('click', () => {
-      const content = header.nextElementSibling;
-      const active = header.classList.toggle('active');
-      if (active) {
-        content.style.height = content.scrollHeight + 'px';
-      } else {
-        content.style.height = '0';
-      }
-    });
-  });
-
-  // ===== слайдшоу =====
-  const avatars = document.querySelectorAll('.slideshow__avatars img');
-  const slides = document.querySelectorAll('.slideshow__item');
-  avatars.forEach(avatar => {
-    avatar.addEventListener('click', () => {
-      const id = avatar.getAttribute('data-id');
-      avatars.forEach(a => a.classList.remove('active'));
-      slides.forEach(s => s.classList.remove('active'));
-      avatar.classList.add('active');
-      document.querySelector('.slideshow__item[data-id="'+id+'"]').classList.add('active');
-    });
-  });
-
-  // ===== AJAX форма =====
-  document.getElementById('orderForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const result = document.getElementById('formResult');
-
-    const data = {
-      name: form.name.value.trim(),
-      phone: form.phone.value.trim(),
-      comment: form.comment.value.trim(),
-      to: form.to.value
-    };
-
-    if (!data.name || !data.phone) {
-      result.textContent = 'Пожалуйста, заполните обязательные поля.';
-      result.style.color = 'red';
-      return;
-    }
-
-    try {
-      const response = await fetch('https://webdev-api.loftschool.com/sendmail', {
-        method: 'POST',
-        headers: {'content-type': 'application/json'},
-        body: JSON.stringify(data)
+    // === Аккордеон ===
+    const accordions = document.querySelectorAll('.accordion__item');
+    accordions.forEach(item => {
+      item.querySelector('.accordion__header').addEventListener('click', () => {
+        item.classList.toggle('active');
       });
-      const json = await response.json();
-      result.textContent = json.message || (json.status === 'ok' ? 'Сообщение отправлено!' : 'Ошибка отправки');
-      result.style.color = json.status === 'ok' ? 'green' : 'red';
-      form.reset();
-    } catch (err) {
-      result.textContent = 'Ошибка соединения.';
-      result.style.color = 'red';
-    }
-  });
-  </script>
+    });
 
+    // === Слайдшоу ===
+    const avatars = document.querySelectorAll('.slideshow__avatars img');
+    const content = document.getElementById('slideshow-content');
+    const texts = [
+      '“Лучший шоколад, который я пробовала! Натуральный и очень вкусный.” — Анна',
+      '“Идеально подходит для перекуса на работе. Беру всегда с собой.” — Дмитрий',
+      '“Полезно, вкусно и без сахара — просто супер!” — Ольга'
+    ];
+    avatars.forEach((img, i) => {
+      img.addEventListener('click', () => {
+        avatars.forEach(a => a.classList.remove('active'));
+        img.classList.add('active');
+        content.textContent = texts[i];
+      });
+    });
+
+    // === Форма AJAX ===
+    const form = document.getElementById('order-form');
+    const message = document.getElementById('form-message');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = {
+        name: form.name.value.trim(),
+        phone: form.phone.value.trim(),
+        comment: form.comment.value.trim(),
+        to: "example@mail.ru"
+      };
+
+      if (!data.name || !data.phone) {
+        message.textContent = "Пожалуйста, заполните все поля.";
+        message.style.color = "red";
+        return;
+      }
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://webdev-api.loftschool.com/sendmail');
+      xhr.setRequestHeader('content-type', 'application/json');
+      xhr.send(JSON.stringify(data));
+
+      xhr.addEventListener('load', () => {
+        if (xhr.status === 200) {
+          message.textContent = "Сообщение успешно отправлено!";
+          message.style.color = "green";
+          form.reset();
+        } else {
+          message.textContent = "Ошибка отправки. Попробуйте позже.";
+          message.style.color = "red";
+        }
+      });
+    });
+  </script>
 </body>
 </html>
