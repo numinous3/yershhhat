@@ -1,330 +1,225 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CHOCCO — Натуральные шоколадные батончики</title>
   <style>
-/* ===== normalize.css ===== */
+/* ===== normalize ===== */
 html{line-height:1.15;-webkit-text-size-adjust:100%}
 body{margin:0}
 main{display:block}
 img{border-style:none;max-width:100%;display:block}
 button,input,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}
 
-/* ===== Общие стили ===== */
+/* ===== базовые стили ===== */
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
   color: #333;
   background-color: #fff;
   line-height: 1.5;
+  overflow-x: hidden;
 }
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 15px;
+.container {max-width: 1100px;margin: 0 auto;padding: 0 15px;}
+.section-title {text-align: center;font-size: 2rem;margin-bottom: 1.5rem;color: #1c2b2d;}
+.button {display: inline-block;background-color: #fff;color: #2b7a78;border-radius: 30px;padding: 12px 32px;text-decoration: none;font-weight: 600;transition: 0.3s;}
+.button:hover {background-color: #e7f4f3;}
+
+/* ===== header & fullscreen menu ===== */
+.header {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  background-color: rgba(255,255,255,0.9);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 10;
 }
-.section-title {
-  text-align: center;
+.logo {font-weight: 700; color: #2b7a78; font-size: 1.2rem;}
+.menu-btn {background: none;border: 2px solid #2b7a78;border-radius: 6px;padding: 6px 10px;cursor: pointer;font-weight: bold;color: #2b7a78;}
+
+/* полноэкранное меню */
+.fullscreen-menu {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 20;
+}
+.fullscreen-menu.active {display: flex;}
+.fullscreen-menu a {
+  color: #fff;
   font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #1c2b2d;
-}
-.button {
-  display: inline-block;
-  background-color: #fff;
-  color: #2b7a78;
-  border-radius: 30px;
-  padding: 12px 32px;
+  margin: 15px 0;
   text-decoration: none;
-  font-weight: 600;
   transition: 0.3s;
 }
-.button:hover {
-  background-color: #e7f4f3;
+.fullscreen-menu a:hover {color: #2b7a78;}
+.close-menu {
+  position: absolute; top: 25px; right: 30px;
+  color: #fff; font-size: 2rem; cursor: pointer;
 }
 
 /* ===== hero ===== */
 .hero {
   color: #fff;
   text-align: center;
-  padding: 100px 20px;
+  padding: 120px 20px 100px;
   background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 100%), 
               url('https://images.unsplash.com/photo-1606313564200-e50b8b18461d?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
 }
-.hero__content {
-  max-width: 650px;
-  margin: 0 auto;
-}
-.hero__title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-.hero__text {
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-}
+.hero__content {max-width: 650px;margin: 0 auto;}
+.hero__title {font-size: 2.5rem;font-weight: 700;margin-bottom: 1rem;}
+.hero__text {font-size: 1.1rem;margin-bottom: 2rem;}
 
-/* ===== products ===== */
-.products {
-  background-color: #f9f9f9;
-  padding: 80px 20px;
-}
-.products__list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-}
-.product-card {
-  background: #fff;
-  border-radius: 16px;
+/* ===== slider (заготовка) ===== */
+.slider {background-color: #f1f8f6;padding: 80px 20px;text-align:center;}
+.slider__slide {
+  max-width: 700px;margin: 0 auto;
+  background: #fff;border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  width: 300px;
-  overflow: hidden;
-  text-align: center;
-  transition: 0.3s;
-}
-.product-card:hover {
-  transform: translateY(-5px);
-}
-.product-card img {
-  height: 200px;
-  width: 100%;
-  object-fit: cover;
-}
-.product-card h3 {
-  font-size: 1.2rem;
-  margin: 15px 0 5px;
-  color: #2b7a78;
-}
-.product-card p {
-  font-size: 0.95rem;
-  color: #555;
-  margin: 0 0 10px;
-  padding: 0 10px;
-}
-.product-card .price {
-  font-weight: bold;
-  color: #1c2b2d;
-  margin-bottom: 15px;
-}
-.product-card .button {
-  margin-bottom: 20px;
-  background-color: #2b7a78;
-  color: #fff;
-}
-.product-card .button:hover {
-  background-color: #20625e;
-}
-
-/* ===== benefits ===== */
-.benefits {
-  background-color: #fff;
-  padding: 80px 20px;
-}
-.benefits__list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
-}
-.benefits__item {
-  flex: 1 1 250px;
-  background-color: #f9f9f9;
-  border-radius: 16px;
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-.benefits__item img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  margin: 0 auto 15px;
-  border-radius: 50%;
-}
-.benefits__item-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #2b7a78;
-  margin-bottom: 10px;
-}
-
-/* ===== reviews ===== */
-.reviews {
-  background-color: #e7f4f3;
-  padding: 80px 20px;
-}
-.reviews__item {
-  max-width: 700px;
-  margin: 0 auto;
-  background: #fff;
-  border-radius: 20px;
   padding: 40px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-.reviews__item img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 0 auto 15px;
+.slider__slide img {border-radius: 12px;margin-bottom: 15px;}
+
+/* ===== accordion ===== */
+.accordion {background:#fff;padding:80px 20px;}
+.accordion__item {border:1px solid #ccc;border-radius:8px;margin-bottom:10px;overflow:hidden;}
+.accordion__header {
+  background:#f9f9f9;cursor:pointer;
+  padding:15px;font-weight:600;
+  display:flex;justify-content:space-between;align-items:center;
 }
-.reviews__author {
-  margin-top: 10px;
-  font-weight: bold;
-  color: #2b7a78;
+.accordion__header.active {background:#ffec8b;}
+.accordion__content {
+  height:0;overflow:hidden;
+  transition:height 0.4s ease;
+  padding:0 15px;
 }
+.accordion__content-inner {padding:15px 0;}
+.accordion__arrow {transition:transform 0.3s;}
+.accordion__header.active .accordion__arrow {transform:rotate(180deg);}
+
+/* ===== slideshow ===== */
+.slideshow {background:#e7f4f3;padding:80px 20px;text-align:center;}
+.slideshow__avatars {display:flex;justify-content:center;gap:20px;margin-bottom:30px;}
+.slideshow__avatars img {
+  width:70px;height:70px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:0.3s;
+}
+.slideshow__avatars img.active {border-color:#2b7a78;}
+.slideshow__content {max-width:600px;margin:0 auto;}
+.slideshow__item {display:none;}
+.slideshow__item.active {display:block;}
 
 /* ===== form ===== */
-.form {
-  background-color: #f1f8f6;
-  padding: 80px 20px;
-}
-.form__container {
-  max-width: 700px;
-  margin: 0 auto;
-}
+.form {background-color:#f9f9f9;padding:80px 20px;}
+.form__container {max-width:700px;margin:0 auto;}
 .form__input, .form__textarea {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin-bottom: 15px;
-  font-size: 1rem;
+  width:100%;border:1px solid #ccc;border-radius:8px;padding:10px 14px;margin-bottom:15px;font-size:1rem;
 }
-.form__button {
-  background-color: #2b7a78;
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  padding: 12px 30px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s;
-}
-.form__button:hover {
-  background-color: #20625e;
-}
+.form__button {background-color:#2b7a78;color:#fff;border:none;border-radius:25px;padding:12px 30px;cursor:pointer;font-weight:600;transition:0.3s;}
+.form__button:hover {background-color:#20625e;}
+.form__result {margin-top:15px;font-weight:600;text-align:center;}
 
 /* ===== footer ===== */
-.footer {
-  background-color: #1c2b2d;
-  color: #fff;
-  text-align: center;
-  padding: 30px 15px;
-  font-size: 0.9rem;
-}
-.footer__map {
-  margin: 20px auto;
-  height: 200px;
-  background: url('https://static-maps.yandex.ru/1.x/?lang=ru_RU&ll=37.601,55.752&z=13&size=450,200&l=map') center/cover no-repeat;
-  border-radius: 10px;
-  max-width: 450px;
-}
+.footer {background-color:#1c2b2d;color:#fff;text-align:center;padding:30px 15px;font-size:0.9rem;}
+.footer__map {margin:20px auto;height:200px;background:url('https://static-maps.yandex.ru/1.x/?lang=ru_RU&ll=37.601,55.752&z=13&size=450,200&l=map') center/cover no-repeat;border-radius:10px;max-width:450px;}
 
 /* ===== адаптив ===== */
-@media (max-width: 768px) {
-  .products__list {
-    flex-direction: column;
-    align-items: center;
-  }
-  .benefits__list {
-    flex-direction: column;
-    align-items: center;
-  }
-  .hero {
-    padding: 70px 15px;
-  }
-  .hero__title {
-    font-size: 1.8rem;
-  }
-  .form__button {
-    width: 100%;
-  }
+@media (max-width:768px){
+  .hero__title{font-size:1.8rem;}
+  .hero{padding:90px 15px;}
+  .slideshow__avatars{flex-wrap:wrap;}
+  .form__button{width:100%;}
 }
   </style>
 </head>
 <body>
 
+  <!-- ===== header ===== -->
+  <header class="header">
+    <div class="logo">CHOCCO</div>
+    <button class="menu-btn">Меню</button>
+  </header>
+
+  <!-- ===== fullscreen menu ===== -->
+  <div class="fullscreen-menu" id="menu">
+    <span class="close-menu" id="closeMenu">&times;</span>
+    <a href="#hero">Главная</a>
+    <a href="#slider">Слайдер</a>
+    <a href="#accordion">Аккордеон</a>
+    <a href="#slideshow">Слайдшоу</a>
+    <a href="#form">Заказ</a>
+  </div>
+
   <!-- ===== hero ===== -->
-  <section class="hero" role="banner">
+  <section id="hero" class="hero">
     <div class="hero__content">
       <h1 class="hero__title">Натуральные шоколадные батончики CHOCCO</h1>
-      <p class="hero__text">
-        100% натуральные ингредиенты без сахара — энергия и вкус в каждом кусочке.
-      </p>
-      <a href="#products" class="button hero__button">Посмотреть продукцию</a>
+      <p class="hero__text">100% натуральные ингредиенты без сахара — энергия и вкус в каждом кусочке.</p>
+      <a href="#form" class="button">Заказать</a>
     </div>
   </section>
 
-  <!-- ===== products ===== -->
-  <section id="products" class="products" aria-labelledby="products-title">
-    <div class="container">
-      <h2 id="products-title" class="section-title">Наши батончики</h2>
-      <div class="products__list">
-        <div class="product-card">
-          <img src="https://images.unsplash.com/photo-1621072156002-3572f82a47eb?auto=format&fit=crop&w=700&q=80" alt="CHOCCO Classic">
-          <h3>CHOCCO Classic</h3>
-          <p>Тёмный шоколад с миндалём и финиками. Классика вкуса без сахара.</p>
-          <div class="price">180 ₽</div>
-          <a href="#form" class="button">Заказать</a>
+  <!-- ===== slider ===== -->
+  <section id="slider" class="slider">
+    <h2 class="section-title">Наш слайдер</h2>
+    <div class="slider__slide">
+      <img src="https://images.unsplash.com/photo-1611152043483-8b6fa79b3a83?auto=format&fit=crop&w=700&q=80" alt="Слайд 1">
+      <p>Это пример одного слайда. Позже можно подключить библиотеку (например, Slick или OwlCarousel).</p>
+    </div>
+  </section>
+
+  <!-- ===== accordion ===== -->
+  <section id="accordion" class="accordion">
+    <h2 class="section-title">Наши преимущества</h2>
+
+    <div class="accordion__item">
+      <div class="accordion__header">Полезно <span class="accordion__arrow">▼</span></div>
+      <div class="accordion__content">
+        <div class="accordion__content-inner">
+          Только натуральные ингредиенты, никаких консервантов и искусственных добавок.
         </div>
-        <div class="product-card">
-          <img src="https://images.unsplash.com/photo-1621072156001-6e6b14ce7f04?auto=format&fit=crop&w=700&q=80" alt="CHOCCO Coconut">
-          <h3>CHOCCO Coconut</h3>
-          <p>Молочный шоколад с кокосовой стружкой и медом.</p>
-          <div class="price">190 ₽</div>
-          <a href="#form" class="button">Заказать</a>
+      </div>
+    </div>
+
+    <div class="accordion__item">
+      <div class="accordion__header">Вкусно <span class="accordion__arrow">▼</span></div>
+      <div class="accordion__content">
+        <div class="accordion__content-inner">
+          Нежный вкус, который нравится и взрослым, и детям.
         </div>
-        <div class="product-card">
-          <img src="https://images.unsplash.com/photo-1611152043483-8b6fa79b3a83?auto=format&fit=crop&w=700&q=80" alt="CHOCCO Energy">
-          <h3>CHOCCO Energy</h3>
-          <p>Белковый батончик с какао и орехами — идеален для спорта.</p>
-          <div class="price">210 ₽</div>
-          <a href="#form" class="button">Заказать</a>
+      </div>
+    </div>
+
+    <div class="accordion__item">
+      <div class="accordion__header">Питательно <span class="accordion__arrow">▼</span></div>
+      <div class="accordion__content">
+        <div class="accordion__content-inner">
+          Заряд энергии для активного дня и занятий спортом.
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== benefits ===== -->
-  <section class="benefits">
-    <div class="container">
-      <h2 class="section-title">Почему CHOCCO?</h2>
-      <div class="benefits__list">
-        <div class="benefits__item">
-          <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=300&q=80" alt="Натурально">
-          <h3 class="benefits__item-title">Полезно</h3>
-          <p>Натуральные ингредиенты без сахара и консервантов.</p>
-        </div>
-        <div class="benefits__item">
-          <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=300&q=80" alt="Вкусно">
-          <h3 class="benefits__item-title">Вкусно</h3>
-          <p>Нежный вкус, любимый взрослыми и детьми.</p>
-        </div>
-        <div class="benefits__item">
-          <img src="https://images.unsplash.com/photo-1508747703725-7196c4f17714?auto=format&fit=crop&w=300&q=80" alt="Энергия">
-          <h3 class="benefits__item-title">Питательно</h3>
-          <p>Источник энергии для спорта, учебы и активного дня.</p>
-        </div>
-      </div>
+  <!-- ===== slideshow ===== -->
+  <section id="slideshow" class="slideshow">
+    <h2 class="section-title">Отзывы клиентов</h2>
+    <div class="slideshow__avatars">
+      <img src="https://i.pravatar.cc/100?img=10" data-id="1" class="active" alt="Аватар 1">
+      <img src="https://i.pravatar.cc/100?img=12" data-id="2" alt="Аватар 2">
+      <img src="https://i.pravatar.cc/100?img=15" data-id="3" alt="Аватар 3">
     </div>
-  </section>
-
-  <!-- ===== reviews ===== -->
-  <section class="reviews">
-    <div class="container">
-      <h2 class="section-title">Отзывы</h2>
-      <div class="reviews__item">
-        <img src="https://i.pravatar.cc/150?img=65" alt="Мария Орлова">
-        <p>«Лучшие батончики премиум уровня! Они действительно вкусные и при этом полезные. 
-        Беру их на работу и в спортзал — удобно и сытно!»</p>
-        <div class="reviews__author">— Мария Орлова</div>
-      </div>
+    <div class="slideshow__content">
+      <div class="slideshow__item active" data-id="1">«Отличные батончики, беру их на работу каждый день!» — Мария</div>
+      <div class="slideshow__item" data-id="2">«Очень вкусно, при этом без сахара! Просто супер!» — Алексей</div>
+      <div class="slideshow__item" data-id="3">«Идеально для тренировок, насыщает и не перегружает!» — Ольга</div>
     </div>
   </section>
 
@@ -332,25 +227,93 @@ body {
   <section id="form" class="form">
     <div class="form__container">
       <h2 class="section-title">Закажите доставку</h2>
-      <form action="#" method="post" class="form__body">
-        <input type="text" class="form__input" placeholder="Имя" required>
-        <input type="text" class="form__input" placeholder="Улица" required>
-        <input type="text" class="form__input" placeholder="Дом, корпус, квартира" required>
-        <textarea class="form__textarea" placeholder="Комментарий"></textarea>
-        <button type="submit" class="form__button">Заказать</button>
+      <form id="orderForm">
+        <input type="text" name="name" class="form__input" placeholder="Имя" required>
+        <input type="text" name="phone" class="form__input" placeholder="Телефон" required>
+        <textarea name="comment" class="form__textarea" placeholder="Комментарий"></textarea>
+        <input type="hidden" name="to" value="test@mail.com">
+        <button type="submit" class="form__button">Отправить</button>
       </form>
+      <div class="form__result" id="formResult"></div>
     </div>
   </section>
 
   <!-- ===== footer ===== -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer__map"></div>
-      <p>Москва, ул. Новый Арбат, д.12</p>
-      <p>+7 (800) 983-93-90</p>
-      <p>© 2025 CHOCCO. Все права защищены.</p>
-    </div>
+    <div class="footer__map"></div>
+    <p>Москва, ул. Новый Арбат, д.12</p>
+    <p>+7 (800) 983-93-90</p>
+    <p>© 2025 CHOCCO. Все права защищены.</p>
   </footer>
+
+  <!-- ===== JS ===== -->
+  <script>
+  // ===== полноэкранное меню =====
+  const menu = document.getElementById('menu');
+  document.querySelector('.menu-btn').addEventListener('click', () => menu.classList.add('active'));
+  document.getElementById('closeMenu').addEventListener('click', () => menu.classList.remove('active'));
+
+  // ===== аккордеон =====
+  document.querySelectorAll('.accordion__header').forEach(header => {
+    header.addEventListener('click', () => {
+      const content = header.nextElementSibling;
+      const active = header.classList.toggle('active');
+      if (active) {
+        content.style.height = content.scrollHeight + 'px';
+      } else {
+        content.style.height = '0';
+      }
+    });
+  });
+
+  // ===== слайдшоу =====
+  const avatars = document.querySelectorAll('.slideshow__avatars img');
+  const slides = document.querySelectorAll('.slideshow__item');
+  avatars.forEach(avatar => {
+    avatar.addEventListener('click', () => {
+      const id = avatar.getAttribute('data-id');
+      avatars.forEach(a => a.classList.remove('active'));
+      slides.forEach(s => s.classList.remove('active'));
+      avatar.classList.add('active');
+      document.querySelector('.slideshow__item[data-id="'+id+'"]').classList.add('active');
+    });
+  });
+
+  // ===== AJAX форма =====
+  document.getElementById('orderForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const result = document.getElementById('formResult');
+
+    const data = {
+      name: form.name.value.trim(),
+      phone: form.phone.value.trim(),
+      comment: form.comment.value.trim(),
+      to: form.to.value
+    };
+
+    if (!data.name || !data.phone) {
+      result.textContent = 'Пожалуйста, заполните обязательные поля.';
+      result.style.color = 'red';
+      return;
+    }
+
+    try {
+      const response = await fetch('https://webdev-api.loftschool.com/sendmail', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+      const json = await response.json();
+      result.textContent = json.message || (json.status === 'ok' ? 'Сообщение отправлено!' : 'Ошибка отправки');
+      result.style.color = json.status === 'ok' ? 'green' : 'red';
+      form.reset();
+    } catch (err) {
+      result.textContent = 'Ошибка соединения.';
+      result.style.color = 'red';
+    }
+  });
+  </script>
 
 </body>
 </html>
